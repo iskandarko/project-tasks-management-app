@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  @apply bg-stone-800 text-stone-100 px-6 py-2 rounded break-words hover:bg-stone-600 hover:text-white transition-colors;
+}
+
+.btn-secondary {
+  @apply bg-transparent text-black hover:bg-stone-600 hover:text-white;
+}
+
+.btn-secondary--dark {
+  @apply bg-transparent text-stone-300 hover:bg-stone-600;
+}
+
+.btn--active {
+  @apply bg-stone-600 text-white;
+}
