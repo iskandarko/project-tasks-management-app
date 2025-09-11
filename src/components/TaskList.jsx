@@ -1,19 +1,19 @@
 import { useRef } from "react";
 
-function Tasks({ projectTasks, addTask, deleteTask }) {
+function Tasks({ projectTasks, onAddTask, onDeleteTask }) {
   const taskInput = useRef(null);
 
   function handleAddTask(e) {
     e.preventDefault();
     const task = taskInput.current.value;
     if (task) {
-      addTask(task);
+      onAddTask(task);
       taskInput.current.value = null;
     }
   }
 
   function handleClearTask(index) {
-    deleteTask(index);
+    onDeleteTask(index);
   }
 
   return (

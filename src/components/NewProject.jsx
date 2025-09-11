@@ -1,13 +1,13 @@
 import { useRef } from "react";
 
-function AddProject({ endAddingProject }) {
+function AddProject({ onEndAddingProject }) {
   const titleInput = useRef(null);
   const descriptionInput = useRef(null);
   const dueDateInput = useRef(null);
 
   function handleSave(e) {
     e.preventDefault();
-    endAddingProject({ 
+    onEndAddingProject({ 
       title: titleInput.current.value, 
       description: descriptionInput.current.value, 
       dueDate: dueDateInput.current.value 
@@ -15,7 +15,7 @@ function AddProject({ endAddingProject }) {
   }
 
   function handleCancel() {
-    endAddingProject();
+    onEndAddingProject();
   }
 
   return (

@@ -1,17 +1,17 @@
 import TaskList from './TaskList';
 
-function Project({ project, handleProjectTaskAdd, handleProjectDelete, handleProjectTaskDelete }) {
+function Project({ project, onProjectTaskAdd, onProjectDelete, onProjectTaskDelete }) {
 
   function handleAddTask(task) {
-    handleProjectTaskAdd({ projectId: project.id, task });
+    onProjectTaskAdd({ projectId: project.id, task });
   }
 
   function handleDeleteTask(index) {
-    handleProjectTaskDelete({ projectId: project.id, index });
+    onProjectTaskDelete({ projectId: project.id, index });
   }
 
   function handleDelete() {
-    handleProjectDelete(project.id);
+    onProjectDelete(project.id);
   }
 
   return (
@@ -29,7 +29,7 @@ function Project({ project, handleProjectTaskAdd, handleProjectDelete, handlePro
         </p>
       </div>
       <hr />
-      <TaskList projectTasks={project.tasks || []} addTask={handleAddTask} deleteTask={handleDeleteTask} />
+      <TaskList projectTasks={project.tasks || []} onAddTask={handleAddTask} onDeleteTask={handleDeleteTask} />
     </div>
   );
 }

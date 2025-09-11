@@ -5,7 +5,7 @@ import MainContent from './components/MainContent';
 
 function App() {
   const [projects, setProjects] = useState(() => fetchProjects());
-  const [currentProject, setCurrentProject] = useState(null);
+  const [currentProjectId, setCurrentProjectId] = useState(null);
   const [isAddingProject, setIsAddingProject] = useState(false);
 
   useEffect(() => {
@@ -26,11 +26,11 @@ function App() {
     }
   }
 
-  function startAddingProject() {
+  function handleStartAddingProject() {
     setIsAddingProject(true);
   }
 
-  function endAddingProject(projectData) {
+  function handleEndAddingProject(projectData) {
     if (projectData) {
       handleProjectAdd(projectData);
     }
@@ -41,15 +41,18 @@ function App() {
     const projectId = Math.random();
     const newProject = { id: projectId, title, description, dueDate, tasks: [] };
 
-    setProjects([...projects, newProject]);
-    setCurrentProject(newProject);
+    setProjects((prevProjects) => [...prevProjects, newProject]);
+    handleProjectSelect(projectId);
   }
 
   function handleProjectDelete(projectId) {
     setProjects((prevProjects) => {
       return prevProjects.filter((project) => project.id !== projectId);
     });
-    setCurrentProject(null);
+  }
+
+  function handleProjectSelect(projectId) {
+    setCurrentProjectId(projectId);
   }
 
   function handleProjectTaskAdd({ projectId, task }) {
@@ -75,6 +78,7 @@ function App() {
     })
   }
 
+
   return (
     <div className="app h-full md:container">
       <header>
@@ -82,19 +86,19 @@ function App() {
       </header>
       <div className="h-full md:flex md:gap-4 md:pt-9">
         <Sidebar
-          startAddingProject={startAddingProject}
           projects={projects}
-          setCurrentProject={setCurrentProject}
-          currentProject={currentProject}
+          currentProjectId={currentProjectId}
+          onStartAddingProject={handleStartAddingProject}
+          onProjectSelect={handleProjectSelect}
         />
         <MainContent
+          project={projects.length && projects.find(project => project.id === currentProjectId)}
           isAddingProject={isAddingProject}
-          startAddingProject={startAddingProject}
-          endAddingProject={endAddingProject}
-          handleProjectDelete={handleProjectDelete}
-          handleProjectTaskAdd={handleProjectTaskAdd}
-          handleProjectTaskDelete={handleProjectTaskDelete}
-          project={projects.length && projects.find(project => project.id === currentProject?.id)}
+          onStartAddingProject={handleStartAddingProject}
+          onEndAddingProject={handleEndAddingProject}
+          onProjectDelete={handleProjectDelete}
+          onProjectTaskAdd={handleProjectTaskAdd}
+          onProjectTaskDelete={handleProjectTaskDelete}
         />
       </div>
     </div>

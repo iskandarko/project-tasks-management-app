@@ -4,11 +4,11 @@ import noProjectImage from '../assets/no-projects.png';
 
 function Main({ 
   isAddingProject, 
-  startAddingProject, 
-  endAddingProject, 
-  handleProjectDelete, 
-  handleProjectTaskAdd, 
-  handleProjectTaskDelete,
+  onStartAddingProject, 
+  onEndAddingProject, 
+  onProjectDelete, 
+  onProjectTaskAdd, 
+  onProjectTaskDelete,
   project, 
 }) {
   let mainContent = null;
@@ -16,13 +16,13 @@ function Main({
   if (project && !isAddingProject) {
     mainContent = <Project
       project={project}
-      handleProjectTaskAdd={handleProjectTaskAdd}
-      handleProjectDelete={handleProjectDelete}
-      handleProjectTaskDelete={handleProjectTaskDelete}
+      onProjectTaskAdd={onProjectTaskAdd}
+      onProjectDelete={onProjectDelete}
+      onProjectTaskDelete={onProjectTaskDelete}
     />;
   } else if (isAddingProject) {
     mainContent = <NewProject
-      endAddingProject={endAddingProject}
+      onEndAddingProject={onEndAddingProject}
     />;
   } else {
     mainContent = <article 
@@ -33,7 +33,7 @@ function Main({
       <p className="text-gray-500 mb-4">Select a project or get started with a new one</p>
       <button
         className="btn"
-        onClick={startAddingProject}
+        onClick={onStartAddingProject}
       >
         + Create New Project
       </button>
