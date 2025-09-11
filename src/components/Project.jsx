@@ -1,4 +1,4 @@
-import Tasks from './Tasks';
+import TaskList from './TaskList';
 
 function Project({ project, handleProjectTaskAdd, handleProjectDelete, handleProjectTaskDelete }) {
 
@@ -29,7 +29,7 @@ function Project({ project, handleProjectTaskAdd, handleProjectDelete, handlePro
         </p>
       </div>
       <hr />
-      <Tasks projectTasks={project.tasks || []} addTask={handleAddTask} deleteTask={handleDeleteTask} />
+      <TaskList projectTasks={project.tasks || []} addTask={handleAddTask} deleteTask={handleDeleteTask} />
     </div>
   );
 }

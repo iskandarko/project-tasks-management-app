@@ -1,29 +1,28 @@
-import AddProject from './AddProject';
+import NewProject from './NewProject';
 import Project from './Project';
 import noProjectImage from '../assets/no-projects.png';
 
 function Main({ 
-  newProjectFormDisplay, 
-  handleProjectAdd, 
-  handleNewProjectFormDisplay, 
-  project, 
-  handleProjectTaskAdd, 
+  isAddingProject, 
+  startAddingProject, 
+  endAddingProject, 
   handleProjectDelete, 
-  handleProjectTaskDelete 
+  handleProjectTaskAdd, 
+  handleProjectTaskDelete,
+  project, 
 }) {
   let mainContent = null;
 
-  if (project && !newProjectFormDisplay) {
+  if (project && !isAddingProject) {
     mainContent = <Project
       project={project}
       handleProjectTaskAdd={handleProjectTaskAdd}
       handleProjectDelete={handleProjectDelete}
       handleProjectTaskDelete={handleProjectTaskDelete}
     />;
-  } else if (newProjectFormDisplay) {
-    mainContent = <AddProject
-      handleProjectAdd={handleProjectAdd}
-      handleNewProjectFormDisplay={handleNewProjectFormDisplay}
+  } else if (isAddingProject) {
+    mainContent = <NewProject
+      endAddingProject={endAddingProject}
     />;
   } else {
     mainContent = <article 
@@ -34,7 +33,7 @@ function Main({
       <p className="text-gray-500 mb-4">Select a project or get started with a new one</p>
       <button
         className="btn"
-        onClick={() => handleNewProjectFormDisplay({ show: true })}
+        onClick={startAddingProject}
       >
         + Create New Project
       </button>

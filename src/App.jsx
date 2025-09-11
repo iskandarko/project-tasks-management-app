@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
 import Sidebar from './components/Sidebar';
-import Main from './components/Main';
+import MainContent from './components/MainContent';
 
 function App() {
   const [projects, setProjects] = useState(() => fetchProjects());
-  const [newProjectFormDisplay, setNewProjectFormDisplay] = useState(false);
   const [currentProject, setCurrentProject] = useState(null);
+  const [isAddingProject, setIsAddingProject] = useState(false);
 
   useEffect(() => {
     try {
@@ -26,15 +26,21 @@ function App() {
     }
   }
 
-  function handleNewProjectFormDisplay({ show }) {
-    setNewProjectFormDisplay(show);
+  function startAddingProject() {
+    setIsAddingProject(true);
+  }
+
+  function endAddingProject(projectData) {
+    if (projectData) {
+      handleProjectAdd(projectData);
+    }
+    setIsAddingProject(false);
   }
 
   function handleProjectAdd({ title, description, dueDate }) {
     const projectId = Math.random();
     const newProject = { id: projectId, title, description, dueDate, tasks: [] };
 
-    setNewProjectFormDisplay(false);
     setProjects([...projects, newProject]);
     setCurrentProject(newProject);
   }
@@ -76,18 +82,18 @@ function App() {
       </header>
       <div className="h-full md:flex md:gap-4 md:pt-9">
         <Sidebar
-          handleNewProjectFormDisplay={handleNewProjectFormDisplay}
+          startAddingProject={startAddingProject}
           projects={projects}
           setCurrentProject={setCurrentProject}
           currentProject={currentProject}
         />
-        <Main
-          handleProjectTaskDelete={handleProjectTaskDelete}
+        <MainContent
+          isAddingProject={isAddingProject}
+          startAddingProject={startAddingProject}
+          endAddingProject={endAddingProject}
           handleProjectDelete={handleProjectDelete}
-          newProjectFormDisplay={newProjectFormDisplay}
-          handleNewProjectFormDisplay={handleNewProjectFormDisplay}
-          handleProjectAdd={handleProjectAdd}
           handleProjectTaskAdd={handleProjectTaskAdd}
+          handleProjectTaskDelete={handleProjectTaskDelete}
           project={projects.length && projects.find(project => project.id === currentProject?.id)}
         />
       </div>
