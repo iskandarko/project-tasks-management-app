@@ -6,9 +6,11 @@ import DeleteProject from './components/modal/DeleteProject';
 
 function App() {
   const [projects, setProjects] = useState(() => fetchProjects());
-  const [currentProjectId, setCurrentProjectId] = useState(null);
-  const [isAddingProject, setIsAddingProject] = useState(false);
-  const [isDeletingProject, setIsDeletingProject] = useState(false);
+  const [appState, setAppState] = useState({
+    currentProjectId: null,
+    isAddingProject: false,
+    isDeletingProject: false,
+  });
 
   useEffect(() => {
     try {
@@ -29,14 +31,14 @@ function App() {
   }
 
   function handleStartAddingProject() {
-    setIsAddingProject(true);
+    setAppState((prevAppState) => ({ ...prevAppState, isAddingProject: true }));
   }
 
   function handleEndAddingProject(projectData) {
     if (projectData) {
       handleProjectAdd(projectData);
     }
-    setIsAddingProject(false);
+    setAppState((prevAppState) => ({ ...prevAppState, isAddingProject: false }));
   }
 
   function handleProjectAdd({ title, description, dueDate }) {
@@ -48,7 +50,7 @@ function App() {
   }
 
   function handleProjectDeleteStart() {
-    setIsDeletingProject(true);
+    setAppState((prevAppState) => ({ ...prevAppState, isDeletingProject: true }));
   }
 
   function handleProjectDeleteEnd(projectId) {
@@ -57,11 +59,11 @@ function App() {
         return prevProjects.filter((project) => project.id !== projectId);
       });
     }
-    setIsDeletingProject(false);
+    setAppState((prevAppState) => ({ ...prevAppState, isDeletingProject: false }));
   }
 
   function handleProjectSelect(projectId) {
-    setCurrentProjectId(projectId);
+    setAppState((prevAppState) => ({ ...prevAppState, currentProjectId: projectId }));
   }
 
   function handleProjectTaskAdd({ projectId, task }) {
@@ -95,13 +97,13 @@ function App() {
       <div className="h-full md:flex md:gap-4 md:pt-9">
         <Sidebar
           projects={projects}
-          currentProjectId={currentProjectId}
+          currentProjectId={appState.currentProjectId}
           onStartAddingProject={handleStartAddingProject}
           onProjectSelect={handleProjectSelect}
         />
         <MainContent
-          project={projects.length && projects.find(project => project.id === currentProjectId)}
-          isAddingProject={isAddingProject}
+          project={projects.length && projects.find(project => project.id === appState.currentProjectId)}
+          isAddingProject={appState.isAddingProject}
           onStartAddingProject={handleStartAddingProject}
           onEndAddingProject={handleEndAddingProject}
           onProjectDeleteStart={handleProjectDeleteStart}
@@ -110,11 +112,11 @@ function App() {
         />
       </div>
       <DeleteProject
-        isOpen={isDeletingProject}
+        isOpen={appState.isDeletingProject}
         onDelete={handleProjectDeleteEnd}
         onCancel={handleProjectDeleteEnd}
-        projectId={currentProjectId}
-        projectTitle={projects.find(project => project.id === currentProjectId)?.title}
+        projectId={appState.currentProjectId}
+        projectTitle={projects.find(project => project.id === appState.currentProjectId)?.title}
       />
     </div>
   );
