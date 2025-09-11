@@ -9,7 +9,7 @@ function Sidebar({
   }
 
   return (
-    <nav className="bg-stone-800 text-white px-6 py-10 rounded-b-xl md:w-1/2 xl:w-1/3 2xl:w-1/4 md:h-full md:rounded-none md:rounded-tr-lg">
+    <nav className="bg-stone-800 text-white px-6 py-10 rounded-b-lg md:w-1/2 xl:w-1/3 2xl:w-1/4 md:h-full md:rounded-none md:rounded-tr-xl">
       <h1 className="text-2xl px-4 font-semibold mb-7 uppercase">Your Projects</h1>
       <button className="btn" onClick={() => handleNewProjectFormDisplay({ show: true })}>+ Add Project</button>
       {projects.length > 0 && (

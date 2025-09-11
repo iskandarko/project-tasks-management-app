@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .btn {
-  @apply bg-stone-800 text-stone-100 px-6 py-2 rounded break-words hover:bg-stone-600 hover:text-white transition-colors;
+  @apply bg-stone-800 text-stone-100 px-6 py-2 rounded-md break-words hover:bg-stone-600 hover:text-white transition-colors;
 }
 
 .btn-secondary {
