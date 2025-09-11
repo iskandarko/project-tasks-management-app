@@ -1,6 +1,6 @@
 import TaskList from './TaskList';
 
-function Project({ project, onProjectTaskAdd, onProjectDelete, onProjectTaskDelete }) {
+function Project({ project, onProjectDeleteStart, onProjectTaskAdd, onProjectTaskDelete }) {
 
   function handleAddTask(task) {
     onProjectTaskAdd({ projectId: project.id, task });
@@ -10,8 +10,8 @@ function Project({ project, onProjectTaskAdd, onProjectDelete, onProjectTaskDele
     onProjectTaskDelete({ projectId: project.id, index });
   }
 
-  function handleDelete() {
-    onProjectDelete(project.id);
+  function handleDeleteProject() {
+    onProjectDeleteStart(project.id);
   }
 
   return (
@@ -21,7 +21,7 @@ function Project({ project, onProjectTaskAdd, onProjectDelete, onProjectTaskDele
           <h2 className="text-3xl font-bold mb-2">{project.title}</h2>
           <p className="text-slate-500">Due: {project.dueDate}</p>
         </div>
-        <button className="btn btn-secondary" onClick={handleDelete}>Delete</button>
+        <button className="btn btn-secondary btn--danger" onClick={handleDeleteProject}>Delete</button>
       </div>
       <div className="project-details">
         <p className="project-description">

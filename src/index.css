@@ -17,3 +17,7 @@
 .btn--active {
   @apply bg-stone-600 text-white;
 }
+
+.btn--danger {
+  @apply hover:bg-red-800;
+}

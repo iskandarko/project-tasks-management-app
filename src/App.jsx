@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 
 import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
+import DeleteProject from './components/modal/DeleteProject';
 
 function App() {
   const [projects, setProjects] = useState(() => fetchProjects());
   const [currentProjectId, setCurrentProjectId] = useState(null);
   const [isAddingProject, setIsAddingProject] = useState(false);
+  const [isDeletingProject, setIsDeletingProject] = useState(false);
 
   useEffect(() => {
     try {
@@ -45,10 +47,17 @@ function App() {
     handleProjectSelect(projectId);
   }
 
-  function handleProjectDelete(projectId) {
-    setProjects((prevProjects) => {
-      return prevProjects.filter((project) => project.id !== projectId);
-    });
+  function handleProjectDeleteStart() {
+    setIsDeletingProject(true);
+  }
+
+  function handleProjectDeleteEnd(projectId) {
+    if (projectId) {
+      setProjects((prevProjects) => {
+        return prevProjects.filter((project) => project.id !== projectId);
+      });
+    }
+    setIsDeletingProject(false);
   }
 
   function handleProjectSelect(projectId) {
@@ -78,7 +87,6 @@ function App() {
     })
   }
 
-
   return (
     <div className="app h-full md:container">
       <header>
@@ -96,11 +104,18 @@ function App() {
           isAddingProject={isAddingProject}
           onStartAddingProject={handleStartAddingProject}
           onEndAddingProject={handleEndAddingProject}
-          onProjectDelete={handleProjectDelete}
+          onProjectDeleteStart={handleProjectDeleteStart}
           onProjectTaskAdd={handleProjectTaskAdd}
           onProjectTaskDelete={handleProjectTaskDelete}
         />
       </div>
+      <DeleteProject
+        isOpen={isDeletingProject}
+        onDelete={handleProjectDeleteEnd}
+        onCancel={handleProjectDeleteEnd}
+        projectId={currentProjectId}
+        projectTitle={projects.find(project => project.id === currentProjectId)?.title}
+      />
     </div>
   );
 }

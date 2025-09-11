@@ -29,7 +29,7 @@ function Tasks({ projectTasks, onAddTask, onDeleteTask }) {
         {projectTasks.length ? projectTasks.map((task, index) => (
           <li key={index} className="flex justify-between items-center">
             <span className="text-md">Task {index + 1}: {task}</span>
-            <button className="btn btn-secondary" onClick={() => handleClearTask(index)}>Clear</button>
+            <button className="btn btn-secondary btn--danger" onClick={() => handleClearTask(index)}>Clear</button>
           </li>
         )) : <p>No tasks added yet.</p>}
       </ul>
