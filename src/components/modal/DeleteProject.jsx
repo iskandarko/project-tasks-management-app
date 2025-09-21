@@ -1,27 +1,32 @@
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 
 import ModalWrapper from "./ModalWrapper";
+import { AppContext } from "../../store/app-context";
 
-export default function DeleteProject({
-  isOpen,
-  onDelete,
-  onCancel,
-  projectId,
-  projectTitle,
-}) {
+export default function DeleteProject() {
+  const { 
+    appState: { 
+      isDeletingProject,
+      currentProjectId,
+    },
+    projects,
+    handleProjectDeleteEnd,
+  } = useContext(AppContext);
+
   const deleteModalRef = useRef();
+  const projectTitle = projects.find(project => project.id === currentProjectId)?.title
 
-  if (isOpen) {
+  if (isDeletingProject) {
     deleteModalRef.current.open();
   }
 
   function handleCancel() {
-    onCancel();
+    handleProjectDeleteEnd();
     deleteModalRef.current.close();
   }
 
   function handleDelete() {
-    onDelete(projectId);
+    handleProjectDeleteEnd(currentProjectId);
     deleteModalRef.current.close();
   }
 

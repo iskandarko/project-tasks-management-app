@@ -1,17 +1,25 @@
+import { useContext } from 'react';
+import { AppContext } from '../store/app-context';
+
 import TaskList from './TaskList';
 
-function Project({ project, onProjectDeleteStart, onProjectTaskAdd, onProjectTaskDelete }) {
+function Project({ project }) {
+  const { 
+    handleProjectDeleteStart,
+    handleProjectTaskAdd,
+    handleProjectTaskDelete
+   } = useContext(AppContext);
 
   function handleAddTask(task) {
-    onProjectTaskAdd({ projectId: project.id, task });
+    handleProjectTaskAdd({ projectId: project.id, task });
   }
 
   function handleDeleteTask(index) {
-    onProjectTaskDelete({ projectId: project.id, index });
+    handleProjectTaskDelete({ projectId: project.id, index });
   }
 
   function handleDeleteProject() {
-    onProjectDeleteStart(project.id);
+    handleProjectDeleteStart(project.id);
   }
 
   return (

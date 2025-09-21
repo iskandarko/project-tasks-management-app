@@ -1,13 +1,16 @@
-import { useRef } from "react";
+import { useRef, useContext } from "react";
+import { AppContext } from "../store/app-context";
 
-function AddProject({ onEndAddingProject }) {
+function AddProject() {
   const titleInput = useRef(null);
   const descriptionInput = useRef(null);
   const dueDateInput = useRef(null);
 
+  const { handleEndAddingProject } = useContext(AppContext);
+
   function handleSave(e) {
     e.preventDefault();
-    onEndAddingProject({ 
+    handleEndAddingProject({ 
       title: titleInput.current.value, 
       description: descriptionInput.current.value, 
       dueDate: dueDateInput.current.value 
@@ -15,7 +18,7 @@ function AddProject({ onEndAddingProject }) {
   }
 
   function handleCancel() {
-    onEndAddingProject();
+    handleEndAddingProject();
   }
 
   return (

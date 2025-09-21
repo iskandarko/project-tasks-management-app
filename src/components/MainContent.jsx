@@ -1,32 +1,30 @@
+import { useContext } from 'react';
+
 import NewProject from './NewProject';
 import Project from './Project';
 import noProjectImage from '../assets/no-projects.png';
+import { AppContext } from '../store/app-context';
 
-function Main({ 
-  isAddingProject, 
-  onStartAddingProject, 
-  onEndAddingProject, 
-  onProjectDeleteStart, 
-  onProjectTaskAdd, 
-  onProjectTaskDelete,
-  project,
-}) {
+function Main() {
+  const { 
+    appState: { 
+      currentProjectId,
+      isAddingProject,
+    },
+    projects,
+    handleStartAddingProject,
+  } = useContext(AppContext);
   let mainContent = null;
+
+  const project = projects.length && projects.find(project => project.id === currentProjectId)
 
   if (project && !isAddingProject) {
     mainContent = (
-      <Project
-        project={project}
-        onProjectTaskAdd={onProjectTaskAdd}
-        onProjectDeleteStart={onProjectDeleteStart}
-        onProjectTaskDelete={onProjectTaskDelete}
-      />
+      <Project project={project} />
     );
   } else if (isAddingProject) {
     mainContent = (
-      <NewProject
-        onEndAddingProject={onEndAddingProject}
-      />
+      <NewProject />
     );
   } else {
     mainContent = (
@@ -38,7 +36,7 @@ function Main({
         <p className="text-gray-500 mb-4">Select a project or get started with a new one</p>
         <button
           className="btn"
-          onClick={onStartAddingProject}
+          onClick={handleStartAddingProject}
         >
           + Create New Project
         </button>
