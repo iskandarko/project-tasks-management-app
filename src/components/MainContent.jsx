@@ -31,7 +31,7 @@ function Main({
   } else {
     mainContent = (
       <article 
-        className="flex flex-col gap-4 items-center justify-center h-full"
+        className="flex flex-col gap-4 items-center pt-10 md:pt-24"
       >
         <img src={noProjectImage} className='w-20 h-20 mb-4' alt="Notepad with a pen" />
         <h2 className="text-2xl font-bold">No Project Selected</h2>
